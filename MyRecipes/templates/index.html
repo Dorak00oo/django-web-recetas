@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recetario</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+
+    <div class="section welcome">
+        <div class="content">
+            <h1>Bienvenido a tu Recetario favorito</h1>
+            <p>Explora deliciosas ideas para tu cocina</p>
+            <small>Creado por DrkDev</small>
+        </div>
+    </div>
+
+    <div class="section recetas">
+        <h2>Recetas destacadas</h2>
+        <input type="text" id="buscador" placeholder="Buscar receta..." class="buscador">
+
+        <div class="grid">
+            {% for receta in recetas %}
+            <div class="card reveal">
+                <a href="{% url 'receta' receta.id %}">
+                    <img src="{{ receta.imagen_principal.url }}" alt="{{ receta.titulo }}">
+                </a>
+                <h3>{{ receta.titulo }}</h3>
+                <p>{{ receta.descripcion|truncatewords:15 }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll(".reveal");
+
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const visiblePoint = 150;
+
+                if (elementTop < windowHeight - visiblePoint) {
+                    el.classList.add("active");
+                } else {
+                    el.classList.remove("active");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", revealOnScroll);
+        window.addEventListener("load", revealOnScroll);
+    </script>
+    <script>
+
+        const inputBuscador = document.getElementById("buscador");
+
+        inputBuscador.addEventListener("input", () => {
+            const texto = inputBuscador.value.toLowerCase();
+            const cards = document.querySelectorAll(".card");
+
+            cards.forEach(card => {
+                const titulo = card.querySelector("h3").textContent.toLowerCase();
+                if (titulo.includes(texto)) {
+                    card.style.display = "block";
+                    card.classList.add("active");
+                } else {
+                    card.style.display = "none";
+                    card.classList.remove("active");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

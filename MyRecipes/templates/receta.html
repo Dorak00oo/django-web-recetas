@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ receta.titulo }}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+
+    <div class="recetas-inicio" style="--receta-bg: url('{{ receta.imagen_principal.url }}');">
+
+        <a href="{% url 'index' %}" class="btn-volver">← Volver al inicio</a>
+
+        <div class="content">
+            <h1>{{ receta.titulo }}</h1>
+            <p>{{ receta.descripcion }}</p>
+        </div>
+    </div>
+
+    <div class="navegacion-contenedor">
+        <button class="navegar-btn izquierda" id="btn-atras">←</button>
+
+        <div class="navegacion-receta">
+            {% comment %} Tarjeta de ingredientes y pasos {% endcomment %}
+            <div class="tarjeta" data-paso="0">
+                <h2>Ingredientes</h2>
+                {% for padre in ingredientes_padre %}
+                <div class="sub-tarjeta">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="padre">
+                        <span class="checkmark"></span>
+                        {{ padre.nombre }}
+                    </label>
+                    {% if padre.ingredientes_hijo.all %}
+                    <ul>
+                        {% for hijo in padre.ingredientes_hijo.all %}
+                        <li class="hijo"><label class="custom-checkbox">
+                                <input type="checkbox" class="hijo">
+                                <span class="checkmark"></span>
+                                {{ hijo.nombre }}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            {% for paso in pasos %}
+            <div class="tarjeta" data-paso="{{ forloop.counter }}">
+                <h2>Paso {{ forloop.counter }}{% if paso.titulo %}: {{ paso.titulo }}{% endif %}</h2>
+                <p>{{ paso.descripcion }}</p>
+                {% if paso.imagen %}
+                <img src="{{ paso.imagen.url }}" class="imagen-paso">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <button class="navegar-btn derecha" id="btn-siguiente">→</button>
+    </div>
+
+    <p>
+    <div class="menu-pasos">
+        <button class="ir-a-paso" data-paso="0">Ingredientes</button>
+        {% for paso in pasos %}
+        <button class="ir-a-paso" data-paso="{{ forloop.counter }}">Paso {{ forloop.counter }}</button>
+        {% endfor %}
+    </div>
+    </p>
+
+</body>
+
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const padres = document.querySelectorAll('input.padre');
+
+        padres.forEach(function (padreCheckbox) {
+            padreCheckbox.addEventListener('change', function () {
+                const contenedor = padreCheckbox.closest('.sub-tarjeta');
+                const hijos = contenedor.querySelectorAll('input.hijo');
+                hijos.forEach(function (hijoCheckbox) {
+                    hijoCheckbox.checked = padreCheckbox.checked;
+                });
+            });
+
+            const contenedor = padreCheckbox.closest('.sub-tarjeta');
+            const hijos = contenedor.querySelectorAll('input.hijo');
+
+            hijos.forEach(function (hijoCheckbox) {
+                hijoCheckbox.addEventListener('change', function () {
+                    const todosMarcados = Array.from(hijos).every(hijo => hijo.checked);
+                    padreCheckbox.checked = todosMarcados;
+                });
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const tarjetas = document.querySelectorAll('.tarjeta');
+        const btnAtras = document.getElementById('btn-atras');
+        const btnSiguiente = document.getElementById('btn-siguiente');
+        let pasoActual = 0;
+
+        function mostrarPaso(index) {
+            tarjetas.forEach((tarjeta, i) => {
+                tarjeta.classList.toggle('activa', i === index);
+            });
+
+            btnAtras.disabled = index === 0;
+            btnSiguiente.disabled = index === tarjetas.length - 1;
+        }
+
+        btnAtras.addEventListener('click', () => {
+            if (pasoActual > 0) {
+                pasoActual--;
+                mostrarPaso(pasoActual);
+            }
+        });
+
+        btnSiguiente.addEventListener('click', () => {
+            if (pasoActual < tarjetas.length - 1) {
+                pasoActual++;
+                mostrarPaso(pasoActual);
+            }
+        });
+
+        mostrarPaso(pasoActual);
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const tarjetas = document.querySelectorAll('.tarjeta');
+        const btnIrPasos = document.querySelectorAll('.ir-a-paso');
+        let pasoActual = 0;
+
+        function mostrarPaso(index) {
+            tarjetas.forEach((tarjeta, i) => {
+                tarjeta.classList.toggle('activa', i === index);
+            });
+
+            pasoActual = index;
+            actualizarBotones(); // si usás botones "← →"
+        }
+
+        function actualizarBotones() {
+            const btnAtras = document.getElementById('btn-atras');
+            const btnSiguiente = document.getElementById('btn-siguiente');
+
+            if (btnAtras && btnSiguiente) {
+                btnAtras.disabled = pasoActual === 0;
+                btnSiguiente.disabled = pasoActual === tarjetas.length - 1;
+            }
+        }
+
+        btnIrPasos.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const paso = parseInt(btn.dataset.paso);
+                mostrarPaso(paso);
+            });
+        });
+
+        // Botones ← →
+        const btnAtras = document.getElementById('btn-atras');
+        const btnSiguiente = document.getElementById('btn-siguiente');
+
+        if (btnAtras && btnSiguiente) {
+            btnAtras.addEventListener('click', () => {
+                if (pasoActual > 0) {
+                    mostrarPaso(pasoActual - 1);
+                }
+            });
+
+            btnSiguiente.addEventListener('click', () => {
+                if (pasoActual < tarjetas.length - 1) {
+                    mostrarPaso(pasoActual + 1);
+                }
+            });
+        }
+
+        mostrarPaso(pasoActual); // iniciar
+    });
+</script>
