@@ -1,0 +1,628 @@
+:root {
+    --blue-deep: #134074;         /* Azul profundo - títulos */
+    --blue-dark: #13315C;         /* Azul oscuro - fondo recetas */
+    --blue-night: #0B2545;        /* Azul noche - tarjetas */
+    --blue-light: #8DA9C4;        /* Azul claro - acentos */
+    --off-white: #EEF4ED;         /* Blanco verdoso - fondo general */
+    --teal-accent: #2A9D8F;       /* Verde azulado - acento */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--off-white);
+    color: var(--blue-night);
+}
+
+.section {
+    min-height: 100vh; 
+    height: auto;     
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.welcome {
+    position: relative;
+    background-image: url("images/cocina.jpg"); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.welcome::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to bottom right, rgba(19, 64, 116, 0.6), rgba(42, 157, 143, 0.6)),
+        url("images/cocina.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px) brightness(0.7);
+    transform: scale(1.05); 
+    z-index: 0;
+}
+
+.welcome::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 200px;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--off-white));
+    pointer-events: none;
+    z-index: 1;
+}
+
+.welcome .content {
+    max-width: 600px;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.welcome h1,
+.welcome h2,
+.welcome h3,
+.welcome p,
+.welcome small {
+    color: var(--off-white);
+}
+
+
+.welcome small {
+    font-size: 0.9em;
+    opacity: 0.8;
+    color: var(--blue-night);
+}
+
+.recetas {
+    background: var(--off-white);
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 30px;
+    align-items: start;
+
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(11, 37, 69, 0.1); 
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.6s ease-out;
+    border: 1px solid var(--blue-light);
+    max-width: 300px;
+}
+
+.card.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    height: auto;
+}
+
+h1, h2, h3 {
+    color: var(--blue-deep);
+    margin: 0 0 20px;
+}
+
+p {
+    color: var(--blue-dark);
+}
+
+.buscador {
+  padding: 10px 15px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 30px;
+  border: 1px solid var(--blue-light);
+  border-radius: 8px;
+  font-size: 1em;
+}
+
+
+.recetas-inicio {
+    position: relative;
+    background-image: var(--receta-bg, url("images/cocina.jpg")); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 26vh; 
+}
+
+.recetas-inicio::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to bottom right, rgba(19, 64, 116, 0.6), rgba(42, 157, 143, 0.6)),
+        var(--receta-bg, url("images/cocina.jpg"));
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px) brightness(0.7);
+    transform: scale(1.05); 
+    z-index: 0;
+}
+
+.recetas-inicio::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--off-white));
+    pointer-events: none;
+    z-index: 1;
+}
+
+.recetas-inicio .content {
+    max-width: 800px;         
+    padding: 40px 40px;       
+    margin: 0 auto;           
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.recetas-inicio h1,
+.recetas-inicio p,
+.recetas-inicio small {
+    color: var(--off-white);
+}
+
+.receta-detalle {
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.receta-detalle ol {
+    padding-left: 20px;
+}
+
+.receta-detalle li {
+    margin-bottom: 30px;
+}
+
+.receta-detalle h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #2f2f2f;
+}
+
+.imagen-paso {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.tarjeta-ingredientes,
+.tarjeta-pasos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.tarjeta {
+    display: none;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.tarjeta.activa {
+    display: block;
+}
+
+.navegacion-contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    padding: 20px;
+}
+
+.navegacion-receta {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    position: relative;
+}
+
+.tarjeta {
+    display: none;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tarjeta.activa {
+    display: block;
+}
+
+.navegar-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background-color: #0B2545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.navegar-btn:hover {
+    background-color: #8DA9C4;
+}
+
+.navegar-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.navegar-btn.izquierda {
+    left: 20px;
+}
+
+.navegar-btn.derecha {
+    right: 20px;
+}
+
+.tarjeta h3 {
+    margin-top: 0;
+    color: #2f2f2f;
+}
+
+.subingredientes {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.checkbox-grupo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.imagen-paso {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.menu-pasos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 40px auto 20px;
+}
+
+.menu-pasos button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #0B2545;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.menu-pasos button:hover {
+    background-color: #8DA9C4;
+}
+
+.btn-volver {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #264653;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    z-index: 3;
+}
+
+.btn-volver:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.custom-checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    font-size: 16px;
+    user-select: none;
+    color: #333;
+}
+
+/* Oculta el checkbox nativo */
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* El cuadrito visual del checkbox */
+.custom-checkbox .checkmark {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    height: 20px;
+    width: 20px;
+    background-color: #EEF4ED;
+    border: 2px solid #0B2545;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.custom-checkbox input:checked + .checkmark::after {
+    content: "";
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 5px;
+    height: 8px;
+    border: solid #0B2545;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+ul, ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li {
+    margin-bottom: 6px;
+}
+
+ul li .custom-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+ul li.hijo {
+    padding-left: 24px; 
+}
+
+
+/* =============================
+   📱 Estilos Responsive Celular
+   ============================= */
+@media (max-width: 768px) {
+    .section {
+        padding: 20px;
+    }
+
+    .welcome .content,
+    .recetas-inicio .content {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .grid {
+        grid-template-columns: 1fr; 
+        gap: 16px;
+        padding: 0 16px;
+        justify-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 90%;
+        padding: 16px;
+        font-size: 0.95rem;
+    }
+
+    .tarjeta {
+        padding: 16px;
+        margin: 16px auto;
+        width: 95%;
+        max-width: 100%;
+        font-size: 0.95rem;
+    }
+
+    .tarjeta h2 {
+        font-size: 1.3rem;
+    }
+
+    .tarjeta p {
+        font-size: 1rem;
+    }
+
+    .imagen-paso,
+    .card img {
+        max-width: 100%;
+        max-height: 250px;
+        object-fit: contain;
+    }
+
+    .recetas-inicio {
+        min-height: 226px;
+        padding: 20px 10px;
+        justify-content: center;
+    }
+
+    .recetas-inicio .content {
+        padding: 10px;
+        max-width: 95%;
+        text-align: center;
+    }
+
+    .recetas-inicio h1 {
+        font-size: 1.5rem;
+    }
+
+    .recetas-inicio p {
+        font-size: 1rem;
+    }
+
+    h1, h2, h3 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .buscador {
+        width: 90%;
+        font-size: 1em;
+    }
+
+    .btn-volver {
+        top: 10px;
+        left: 10px;
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+
+    .navegacion-contenedor {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .navegacion-receta {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .navegar-btn {
+        position: fixed;
+        bottom: 20px;
+        top: auto;
+        transform: none;
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        border-radius: 50%;
+        z-index: 100;
+    }
+
+    .navegar-btn.izquierda {
+        left: 20px;
+    }
+
+    .navegar-btn.derecha {
+        right: 20px;
+    }
+
+    .menu-pasos {
+        flex-direction: column;
+        gap: 8px;
+        padding: 0 10px;
+        margin-bottom: 40px;
+    }
+
+    .menu-pasos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        padding: 0 10px;
+        margin-bottom: 40px;
+    }
+
+    .menu-pasos button {
+        width: 100%;
+        padding: 10px;
+        font-size: 15px;
+        background-color: #0B2545;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+    }
+
+    .custom-checkbox .checkmark {
+        width: 18px;
+        height: 18px;
+        top: 1px;
+    }
+
+    .custom-checkbox input:checked + .checkmark::after {
+        width: 4px;
+        height: 7px;
+        top: 45%;
+        left: 50%;
+    }
+
+    .sub-tarjeta ul {
+        padding-left: 16px;
+    }
+
+    .sub-tarjeta ul li {
+        padding-left: 8px;
+    }
+
+    .navegar-btn:hover {
+        background-color: #0B2545;
+    }
+
+    .menu-pasos button:hover {
+        background-color: #0B2545;
+    }
+
+    body {
+        padding-bottom: 40px; 
+    }
+
+}
