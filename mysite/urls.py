@@ -11,6 +11,10 @@ urlpatterns = [
     path('', include('MyRecipes.urls')),
     path('nested_admin/', include('nested_admin.urls')),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+if settings.DEBUG or True:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 
