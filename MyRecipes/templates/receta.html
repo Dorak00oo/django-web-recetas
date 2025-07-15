@@ -10,7 +10,7 @@
 
 <body>
 
-    <div class="recetas-inicio" style="--receta-bg: url('{{ receta.imagen_principal.url }}');">
+    <div class="recetas-inicio" style="--receta-bg: url('{{ receta.imagen_principal }}');">
 
         <a href="{% url 'index' %}" class="btn-volver">← Volver al inicio</a>
 
@@ -57,7 +57,7 @@
                 <h2>Paso {{ forloop.counter }}{% if paso.titulo %}: {{ paso.titulo }}{% endif %}</h2>
                 <p>{{ paso.descripcion }}</p>
                 {% if paso.imagen %}
-                <img src="{{ paso.imagen.url }}" class="imagen-paso">
+                <img src="{{ paso.imagen }}" class="imagen-paso">
                 {% endif %}
             </div>
             {% endfor %}

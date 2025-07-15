@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recetario</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 
 <body>
@@ -26,7 +27,7 @@
             {% for receta in recetas %}
             <div class="card reveal">
                 <a href="{% url 'receta' receta.id %}">
-                    <img src="{{ receta.imagen_principal.url }}" alt="{{ receta.titulo }}">
+                    <img src="{{ receta.imagen_principal }}" alt="{{ receta.titulo }}">
                 </a>
                 <h3>{{ receta.titulo }}</h3>
                 <p>{{ receta.descripcion|truncatewords:15 }}</p>
