@@ -1,0 +1,5 @@
+{
+    "chat.sendElementsToChat.attachImages": false,
+    "chat.sendElementsToChat.attachCSS": false,
+    "chat.sendElementsToChat.enabled": false
+}
