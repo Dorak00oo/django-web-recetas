@@ -14,9 +14,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Archivos de la base de datos (opcional)
-*.sqlite3
-
 # Archivos de compilación o cache
 build/
 dist/

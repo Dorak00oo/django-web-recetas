@@ -29,11 +29,13 @@
                 <h2>Ingredientes</h2>
                 {% for padre in ingredientes_padre %}
                 <div class="sub-tarjeta">
-                    <label class="custom-checkbox">
-                        <input type="checkbox" class="padre">
-                        <span class="checkmark"></span>
-                        {{ padre.nombre }}
-                    </label>
+                    <p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="padre">
+                            <span class="checkmark"></span>
+                            {{ padre.nombre }}
+                        </label>
+                    </p>
                     {% if padre.ingredientes_hijo.all %}
                     <ul>
                         {% for hijo in padre.ingredientes_hijo.all %}
