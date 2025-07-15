@@ -28,7 +28,7 @@ DEBUG = False
 
 import os
 
-ALLOWED_HOSTS = ['django-web-recetas.onrender.com', 'localhost']
+ALLOWED_HOSTS = ['django-web-recetas.onrender.com', 'localhost', '127.0.0.1']
 
 # O si quieres permitir todos los hosts temporalmente (no recomendado en producción):
 # ALLOWED_HOSTS = ['*']
