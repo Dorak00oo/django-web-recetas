@@ -148,8 +148,8 @@ MEDIA_URL = '/media/'
 
 # Configuration       
 cloudinary.config( 
-    cloud_name = "dcykdnypy", 
-    api_key = "213586865333191", 
-    api_secret = "L3eBNq1bHzzgFdD2xpBSae5JEnw", # Click 'View API Keys' above to copy your API secret
+    cloud_name = "name", 
+    api_key = "key", 
+    api_secret = "key", # Click 'View API Keys' above to copy your API secret
     secure=True
 )
